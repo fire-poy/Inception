@@ -19,4 +19,4 @@ COPY conf/start_config.sh /start_config.sh
 EXPOSE 3306
 
 # ==> Execute the bash script to create the database and the user
-# ENTRYPOINT ["sh", "start_config.sh"]
+ENTRYPOINT ["sh", "start_config.sh"]
