@@ -1,22 +1,25 @@
 FROM alpine:3.16.3
 
-# NEED TO ADD THE VOLUME
+# MAY BE NEED TO ADD THE VOLUME MAY BE OR JUST DOIT AT THE DOCKER COMPOSE FILE
 
-# installation of mariadb and mysql client
-RUN apk update && \
-	apk upgrade && \
-	apk add --no-cache --quiet --update mariadb mysql-client mariadb-server-utils && \
-	chmod 755 /var/lib/mysql && \
-	rm -f /etc/my.cnf.d/mariadb-server.cnf /etc/my.cnf.d/my.cnf
+# Installation of mariadb and mysql client
+RUN	apk update && apk upgrade && \
+	apk add mariadb mysql-client
+	# chmod 755 /var/lib/mysql TO CHECK
 
-# installation of mariadb and mysql client
+# Delete default mariadb's configuration file
+RUN	rm -f /etc/my.cnf.d/mariadb-server.cnf
+
+# Copy my mariadb's configuration file into the container
 COPY	conf/my.cnf /etc/my.cnf.d/
 
-# ==> Copy the bash script to create the database and the user into the container
-COPY conf/start_config.sh /start_config.sh
+# Copy the sql script to initialise the users and passwords into the container
+COPY	conf/comands.sql /comands.sql
 
-# ==> Expose the only port allowed by the subject (MySQL)
-EXPOSE 3306
+# Copy the shell script to start the database into the container
+COPY	conf/start_config.sh /start_config.sh
 
-# ==> Execute the bash script to create the database and the user
-ENTRYPOINT ["sh", "start_config.sh"]
+# Expose the port
+EXPOSE	3306
+
+ENTRYPOINT	["sh", "start_config.sh"]

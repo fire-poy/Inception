@@ -1,0 +1,24 @@
+version: "2"
+
+services:
+  mariadb:
+    build: ./requirements/mariadb
+  networks:
+      - my-network
+
+  nginx:
+    build: ./requirements/nginx
+    ports:
+      - 433:433
+    networks:
+      - my-network
+
+  # wordpress:
+  #   depends_on:
+  #     - mariadb
+  #   build: ./requirements/wordpress
+  #   networks:
+  #     - my-network
+
+networks:
+  my-network:
