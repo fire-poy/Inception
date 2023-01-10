@@ -19,7 +19,4 @@ COPY	conf/comands.sql /comands.sql
 # Copy the shell script to start the database into the container
 COPY	conf/start_config.sh /start_config.sh
 
-# Expose the port
-EXPOSE	3306
-
 ENTRYPOINT	["sh", "start_config.sh"]

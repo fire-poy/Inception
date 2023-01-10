@@ -1,24 +1,69 @@
-version: "2"
-
-services:
-  mariadb:
-    build: ./requirements/mariadb
-  networks:
-      - my-network
-
-  nginx:
-    build: ./requirements/nginx
-    ports:
-      - 433:433
-    networks:
-      - my-network
-
-  # wordpress:
-  #   depends_on:
-  #     - mariadb
-  #   build: ./requirements/wordpress
-  #   networks:
-  #     - my-network
+version: "3"
 
 networks:
-  my-network:
+
+ spidy_web:
+  driver: bridge
+
+# how to name volumes
+
+volumes:
+
+ wordpress:
+  driver: local
+  driver_opts:
+   type: 'volume' # ???
+   o: 'bind'
+   device: '/home/epresa/data/wordpress'
+
+ mariadb:
+  driver: local
+  driver_opts:
+   type: 'volume'
+   o: 'bind' # Bind Mounts are volumes that mount on a path to the host, and they can be modified by other processes outside docker.
+   device: '/home/epresa/data/mariadb'
+
+services:
+
+ mariadb:
+  container_name: mariadb
+  image: mariadb
+  networks:
+  - spidy_web
+  build: ./requirements/mariadb
+  env_file: .env
+  volumes:
+  - mariadb:/var/lib/mysql
+  restart: unless-stopped
+  expose:
+  - "3306"
+
+ nginx:
+  container_name: nginx
+  image: nginx
+  volumes:
+  - wordpress:/var/www/wordpress
+  networks:
+  - spidy_web
+  depends_on:
+  - wordpress
+  build: ./requirements/nginx
+  env_file: .env
+  ports:
+  - "443:443"
+  restart: on-failure
+
+ wordpress:
+  container_name: wordpress
+  image: wordpress
+  env_file: .env
+  volumes:
+  - wordpress:/var/www/wordpress
+  networks:
+  - spidy_web
+  build: ./requirements/wordpress
+  depends_on:
+  - mariadb
+  restart: on-failure
+  expose:
+  - "9000"
