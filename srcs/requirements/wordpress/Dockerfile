@@ -1,27 +1,23 @@
-FROM alpine:3.16.3
+FROM	alpine:3.16.3
 
-# MAY BE NEED TO ADD THE VOLUME MAY BE OR JUST DOIT AT THE DOCKER COMPOSE FILE
+RUN		apk update && apk upgrade && \
+		apk add php8-fpm php8-opcache php8-gd php8-curl php8-mysqli php8-json mariadb-client
+		# may be need more dependences of php8
 
-# Installation of mariadb and mysql client
-# RUN	apk update && apk upgrade && \
-	# apk add wordpress
-	# chmod 755 /var/lib/mysql TO CHECK
+RUN		mkdir /var/www && \
+		wget https://fr.wordpress.org/wordpress-6.0-fr_FR.tar.gz -P /var/www && \
+		cd /var/www && \
+		tar -xzf wordpress-6.0-fr_FR.tar.gz && \
+		rm wordpress-6.0-fr_FR.tar.gz && \
+		chown -R root:root /var/www/wordpress
 
-# Delete default mariadb's configuration file
-# RUN	rm -f /etc/my.cnf.d/mariadb-server.cnf
+COPY	conf/start_wordpress.sh /start_wordpress.sh
 
-# # Copy my mariadb's configuration file into the container
-# COPY	conf/my.cnf /etc/my.cnf.d/
+COPY	conf/www.conf /etc/php8/php-fpm.d
 
-# # Copy the sql script to initialise the users and passwords into the container
-# COPY	conf/comands.sql /comands.sql
+RUN		wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
+		chmod +x wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp
 
-# # Copy the shell script to start the database into the container
-# COPY	conf/start_config.sh /start_config.sh
+COPY	conf/auto_config.sh /auto_config.sh
 
-# # Expose the port
-# EXPOSE	3306
-
-# ENTRYPOINT	["sh", "start_config.sh"]
-
-CMD ["sh"]
+ENTRYPOINT	["sh", "start_wordpress.sh"]
