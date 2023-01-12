@@ -1,7 +1,7 @@
 FROM	alpine:3.16.3
 
 RUN		apk update && apk upgrade && \
-		apk add php8-fpm php8-opcache php8-gd php8-curl php8-mysqli php8-json mariadb-client
+		apk add php8 php8-fpm php8-opcache php8-gd php8-curl php8-mysqli php8-json mariadb-client
 		# may be need more dependences of php8
 
 RUN		mkdir /var/www && \
@@ -19,5 +19,7 @@ RUN		wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.p
 		chmod +x wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp
 
 COPY	conf/auto_config.sh /auto_config.sh
+
+COPY	conf/wp-config.php /var/www/wordpress/wp-config.php
 
 ENTRYPOINT	["sh", "start_wordpress.sh"]

@@ -1,5 +1,5 @@
 #!/bin/sh
-sleep 10
+# sleep 10 UNCOMENT BEFORE EVAL
 
 # add line to control if wp-config.php exist
 
@@ -8,11 +8,11 @@ sleep 10
 # 	echo -e "\n\033[33mThe directory /run/mysqld already exists\n\033[0m";
 # fi
 
-wp config create	--allow-root \
-					--dbname=$SQL_DATABASE \
-					--dbuser=$SQL_USER \
-					--dbpass=$SQL_PASSWORD \
-					--dbhost=mariadb:3306 --path='/var/www/wordpress'
+# wp config create	--allow-root \
+# 					--dbname=$SQL_DATABASE \
+# 					--dbuser=$SQL_USER \
+# 					--dbpass=$SQL_PASSWORD \
+# 					--dbhost=mariadb:3306 --path='/var/www/wordpress'
 
 # wp core install
 
