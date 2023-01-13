@@ -4,7 +4,7 @@ FROM alpine:3.16.3
 
 # Installation of mariadb and mysql client
 RUN	apk update && apk upgrade && \
-	apk add mariadb mysql-client
+	apk add mariadb mysql-client gettext
 	# chmod 755 /var/lib/mysql TO CHECK
 
 # Delete default mariadb's configuration file
@@ -18,5 +18,9 @@ COPY	conf/comands.sql /comands.sql
 
 # Copy the shell script to start the database into the container
 COPY	conf/start_config.sh /start_config.sh
+
+RUN		chown -R mysql:mysql /var/lib/mysql
+
+EXPOSE 3306
 
 ENTRYPOINT	["sh", "start_config.sh"]

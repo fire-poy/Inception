@@ -21,6 +21,8 @@ RUN mkdir -p /var/run/nginx
 # copy the configuration file from the repository to the container
 COPY conf/nginx.conf /etc/nginx/nginx.conf
 
+RUN mkdir /var/www/wordpress
+
 # copy of template
 RUN mkdir -p /var/www/html
 COPY conf/todo.html /var/www/html/todo.html

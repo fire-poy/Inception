@@ -35,8 +35,6 @@ services:
   volumes:
   - mariadb:/var/lib/mysql
   restart: unless-stopped
-  expose:
-  - "3306"
 
  nginx:
   container_name: nginx

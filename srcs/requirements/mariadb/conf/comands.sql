@@ -1,32 +1,27 @@
+-- SET PASSWORD FOR 'root'@'localhost' = PASSWORD('$MYSQL_ROOT_PASSWORD');
+-- -- DELETE FROM mysql.user WHERE user != 'root' OR (user = 'root' AND host != 'localhost');
+-- -- DELETE FROM mysql.db WHERE db != 'mysql' OR (db = 'mysql' AND user != 'root');
+-- CREATE DATABASE $MYSQL_NAME;
+-- USE $MYSQL_NAME;
+-- CREATE USER '$MYSQL_USER'@'localhost' IDENTIFIED BY '$MYSQL_PASSWORD';
+-- GRANT ALL PRIVILEGES ON *.* TO '$MYSQL_USER'@'localhost';
+-- FLUSH PRIVILEGES;
+
+
+
+-- DELETE FROM mysql.user WHERE User='';
+-- DROP DATABASE test;
+-- DELETE FROM mysql.db WHERE Db='test';
+-- DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
+
+/** methode d authentification normale donc : set le password **/
+SET PASSWORD FOR 'root'@'localhost' = PASSWORD('$MYSQL_ROOT_PASSWORD');
+-- SET PASSWORD FOR 'root'@'localhost' = PASSWORD('$MYSQL_ROOT_PASSWORD');
+
+/** Creation du premier user, l'autre sera cree via le container wordpress */
+CREATE DATABASE $MYSQL_NAME;
+CREATE USER '$MYSQL_USER'@'%' IDENTIFIED by '$MYSQL_PASSWORD';
+GRANT ALL PRIVILEGES ON $MYSQL_NAME.* TO $MYSQL_USER@'%';
+
+/** Il faut flush pour que le grant soit active */
 FLUSH PRIVILEGES;
-ALTER USER root@localhost IDENTIFIED BY 'koko';
-CREATE DATABASE IF NOT EXISTS DATA_BASE_NAME;
-USE DATA_BASE_NAME;
-CREATE USER IF NOT EXISTS user@'%' IDENTIFIED BY 'koko';
-GRANT ALL PRIVILEGES ON DATA_BASE_NAME.* TO user@'%';
-CREATE USER IF NOT EXISTS USER2@'%' IDENTIFIED BY 'koko';
-FLUSH PRIVILEGES;
-
-
-# FLUSH PRIVILEGES;
-# ALTER USER 'root'@'localhost' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD';
-# CREATE DATABASE IF NOT EXISTS $DATABASE_NAME;
-# USE $DATABASE_NAME;
-# CREATE USER IF NOT EXISTS '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';
-# GRANT ALL PRIVILEGES ON $DATABASE_NAME.* TO '$MYSQL_USER'@'%';
-# CREATE USER IF NOT EXISTS '$SECOND_USER'@'%' IDENTIFIED BY '$SECOND_USER_PASSWORD';
-# FLUSH PRIVILEGES;
-
--- "CREATE DATABASE IF NOT EXISTS \`${SQL_DATABASE}\`;"
-
--- # create an user with a password (if the user does not exist)
--- "CREATE USER IF NOT EXISTS \`${SQL_USER}\`@'localhost' IDENTIFIED BY '${SQL_PASSWORD}';"
-
--- # give all privileges to the user
--- "GRANT ALL PRIVILEGES ON \`${SQL_DATABASE}\`.* TO \`${SQL_USER}\`@'%' IDENTIFIED BY '${SQL_PASSWORD}';"
-
--- #modify sql database
--- "ALTER USER 'root'@'localhost' IDENTIFIED BY '${SQL_ROOT_PASSWORD}';"
-
--- #reload the database
--- "FLUSH PRIVILEGES;"

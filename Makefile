@@ -1,6 +1,6 @@
 all :
-	mkdir -p /home/epresa/data/wordpress
-	mkdir -p /home/epresa/data/mariadb
+	mkdir -p $(HOME)/data/wordpress
+	mkdir -p $(HOME)/data/mariadb
 	make up
 
 up :
@@ -22,8 +22,10 @@ down :
 	docker-compose -f ./srcs/docker-compose.yml down --volumes --rmi all
 
 fclean : down
-	rm -rf /home/epresa/data/wordpress
-	sudo rm -rf /home/epresa/data/mariadb
+	sudo rm -rf $(HOME)/data/wordpress
+	sudo rm -rf $(HOME)/data/mariadb
 	docker system prune -f
 
-.PHONY: up build stop restart remove down fclean
+re : fclean all
+
+.PHONY: up build stop restart remove down fclean re
