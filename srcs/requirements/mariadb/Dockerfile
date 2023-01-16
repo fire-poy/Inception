@@ -1,7 +1,5 @@
 FROM alpine:3.16.3
 
-# MAY BE NEED TO ADD THE VOLUME MAY BE OR JUST DOIT AT THE DOCKER COMPOSE FILE
-
 # Installation of mariadb and mysql client
 RUN	apk update && apk upgrade && \
 	apk add mariadb mysql-client gettext
@@ -20,6 +18,11 @@ COPY	conf/comands.sql /comands.sql
 COPY	conf/start_config.sh /start_config.sh
 
 RUN		chown -R mysql:mysql /var/lib/mysql
+
+# ???
+# RUN chmod 755 /var/www/html
+# ???
+# RUN chown -R www-data:www-data /var/www/html
 
 EXPOSE 3306
 

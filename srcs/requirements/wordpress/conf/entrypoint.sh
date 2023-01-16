@@ -1,31 +1,7 @@
 #!/bin/sh
 sleep 10
-# sleep infinit
 if [ ! -f /var/www/wordpress/wp-config.php ] ; then
 {
-	# echo -e "\t\033[33mWP core download...\033[0m"
-	# wp core download
-	# if [ $? == 0 ] ; then
-	# 	echo -e "\t\033[32mWP core successfully downloaded\033[0m"
-	# else
-	# 	echo -e "\t\033[31mWP core downloadad has failed\033[0m"
-	# fi
-
-	# sleep 5
-
-	# echo -e "\t\033[33mWP core installing...\033[0m"
-	# wp core install
-	# if [ $? == 0 ] ; then
-	# 	echo -e "\t\033[32mWP core successfully installed\033[0m"
-	# else
-	# 	echo -e "\t\033[31mWP core install has failed\033[0m"
-	# fi
-
-	# sleep 5
-
-# wp config create --allow-root --dbname=$MYSQL_NAME --dbuser=$MYSQL_USER --dbpass=$MYSQL_PASSWORD --dbhost=$MYSQL_HOST --path='/var/www/wordpress'
-
-
 	echo -e "\t\033[33mWP config create...\033[0m"
 	wp config create	--allow-root \
 						--dbname=$MYSQL_NAME \
@@ -55,7 +31,6 @@ if [ $? == 0 ] ; then
 else
 	echo -e "\t\033[31mWP user creation has failed\033[0m"
 fi
-	#  wp config create	--allow-root --dbname=$MYSQL_NAME --dbuser=$MYSQL_USER --dbpass=$MYSQL_PASSWORD --dbhost=$MYSQL_HOST --path='/var/www/wordpress'
 
 	sleep 5
 

@@ -10,7 +10,6 @@ RUN		mkdir /var/www && \
 		tar -xzf wordpress-6.0-fr_FR.tar.gz && \
 		rm wordpress-6.0-fr_FR.tar.gz && \
 		chown -R root:root /var/www/wordpress
-		# && \
 		# chmod 777 /var/run/mysqld
 
 COPY	conf/entrypoint.sh /entrypoint.sh
@@ -19,7 +18,5 @@ COPY	conf/www.conf /etc/php8/php-fpm.d
 
 RUN		wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
 		chmod +x wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp
-
-# COPY	conf/wp-config.php .
 
 ENTRYPOINT	["sh", "entrypoint.sh"]

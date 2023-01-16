@@ -23,10 +23,5 @@ COPY conf/nginx.conf /etc/nginx/nginx.conf
 
 RUN mkdir /var/www/wordpress
 
-# copy of template
-RUN mkdir -p /var/www/html
-COPY conf/todo.html /var/www/html/todo.html
-RUN chmod 755 /var/www/html
-
 # Launch NGINX service in the foreground so that the container does not stop
 CMD [ "nginx", "-g", "daemon off;" ]
