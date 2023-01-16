@@ -18,8 +18,11 @@
 SET PASSWORD FOR 'root'@'localhost' = PASSWORD('$MYSQL_ROOT_PASSWORD');
 -- SET PASSWORD FOR 'root'@'localhost' = PASSWORD('$MYSQL_ROOT_PASSWORD');
 
+DELETE FROM mysql.user WHERE user != 'root' AND user != 'mariadb.sys' OR (user = 'root' AND host != 'localhost');
+
 /** Creation du premier user, l'autre sera cree via le container wordpress */
 CREATE DATABASE $MYSQL_NAME;
+-- USE $MYSQL_NAME;
 CREATE USER '$MYSQL_USER'@'%' IDENTIFIED by '$MYSQL_PASSWORD';
 GRANT ALL PRIVILEGES ON $MYSQL_NAME.* TO $MYSQL_USER@'%';
 

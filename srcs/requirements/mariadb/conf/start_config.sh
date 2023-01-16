@@ -6,7 +6,7 @@ if [ ! -d /var/lib/mysql/mysql ]; then
 	# mysql_install_db
 	# usr/bin/mysqld_safe --datadir=/var/lib/mysql &
 	# mysqld_safe --skip-grant-tables #&
-	# mysql_install_db --datadir=/var/lib/mysql
+	mysql_install_db --datadir=/var/lib/mysql
 	if [ $? == 0 ]; then
 		echo -e "\t\033[32mMaria db correctly installed\033[0m"
 	else
@@ -47,8 +47,7 @@ if [ ! -d /var/lib/mysql/mysql ]; then
 		echo -e "\t\033[31mPermissions couldn't be changed\033[0m"
 		exit 1
 	fi
-
-
+	
 	echo -e "\t\n\033[33mExecuting comands.sql script to create mysqld users and passwords\n\033[0m"
 	envsubst < comands.sql > comands_modif.sql
 	mysql -h localhost -u root < comands_modif.sql
@@ -66,8 +65,9 @@ if [ ! -d /var/lib/mysql/mysql ]; then
 	fi
 }
 else
-	echo "The database was already created"
+	echo "\033[32mThe database was already created\033[30m"
 fi
 
+# check if its possible to restart in a not safe mode
 echo -e "\t\n\033[33mRestarting mysql\n\033[0m"
 usr/bin/mysqld_safe --datadir=/var/lib/mysql
