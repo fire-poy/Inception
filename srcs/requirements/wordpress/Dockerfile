@@ -10,7 +10,6 @@ RUN		mkdir /var/www && \
 		tar -xzf wordpress-6.0-fr_FR.tar.gz && \
 		rm wordpress-6.0-fr_FR.tar.gz && \
 		chown -R root:root /var/www/wordpress
-		# chmod 777 /var/run/mysqld
 
 COPY	conf/entrypoint.sh /entrypoint.sh
 

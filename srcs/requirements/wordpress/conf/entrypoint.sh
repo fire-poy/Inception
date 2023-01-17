@@ -51,6 +51,15 @@ fi
 
 	sleep 5
 
+	echo -e "\t\033[33mPlugin update\033[0m"
+	wp plugin update --all --path='/var/www/wordpress'
+	if [ $? == 0 ] ; then
+		echo -e "\033[32mPlugin has been updated\033[0m"
+	else
+		echo -e "\033[31mERROR while update plugin\033[0m"
+	fi
+
+
 	echo -e "\t\033[33mInstaling theme\033[0m"
 	wp theme install twentysixteen --activate --path='/var/www/wordpress'
 	if [ $? == 0 ] ; then
@@ -58,9 +67,14 @@ fi
 	else
 		echo -e "\033[31mERROR while instaling theme\033[0m"
 	fi
-	echo -e "\t\033[33mRestarting php...\033[0m"
-	/usr/sbin/php-fpm8 -F
 }
 else
 	echo -e "\033[32mWordpress has already been installed\033[0m"
+fi
+echo -e "\t\033[33mRestarting php...\033[0m"
+/usr/sbin/php-fpm8 -F
+if [ $? == 0 ] ; then
+	echo -e "\033[32mPhp successfully restarted\033[0m"
+else
+	echo -e "\033[31mERROR while restarting php\033[0m"
 fi

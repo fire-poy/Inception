@@ -44,6 +44,8 @@ if [ ! -d /var/lib/mysql/mysql ]; then
 	fi
 
 	echo -e "\t\n\033[33mExecuting comands.sql script to create mysqld users and passwords\n\033[0m"
+
+	# reduce this next two lines
 	envsubst < comands.sql > comands_modif.sql
 	mysql -h localhost -u root < comands_modif.sql
 	if [ $? == 0 ]; then
