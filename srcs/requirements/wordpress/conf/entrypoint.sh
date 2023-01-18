@@ -14,23 +14,23 @@ if [ ! -f /var/www/wordpress/wp-config.php ] ; then
 		echo -e "\t\033[31mWP config creation has failed\033[0m"
 	fi
 
-sleep 2
+	sleep 2
 
-echo -e "\t\033[33mWP core installing...\033[0m"
-wp core install     --url=$DOMAIN_NAME --title=$SITE_TITLE --admin_user=$MYSQL_USER --admin_password=$MYSQL_PASSWORD --admin_email=$ADMIN_EMAIL --allow-root --path='/var/www/wordpress'
-if [ $? == 0 ] ; then
-	echo -e "\t\033[32mWP core successfully instaled\033[0m"
-else
-	echo -e "\t\033[31mWP core instal has failed\033[0m"
-fi
+	echo -e "\t\033[33mWP core installing...\033[0m"
+	wp core install --url=$DOMAIN_NAME --title=$SITE_TITLE --admin_user=$MYSQL_USER --admin_password=$MYSQL_PASSWORD --admin_email=$ADMIN_EMAIL --allow-root --path='/var/www/wordpress'
+	if [ $? == 0 ] ; then
+		echo -e "\t\033[32mWP core successfully instaled\033[0m"
+	else
+		echo -e "\t\033[31mWP core instal has failed\033[0m"
+	fi
 
-echo -e "\t\033[33mWP user create...\033[0m"
-wp user create      --allow-root --role=author $USER1_LOGIN $USER1_MAIL --user_pass=$USER1_PASS --path='/var/www/wordpress' >> /log.txt
-if [ $? == 0 ] ; then
-	echo -e "\t\033[32mWP user successfully created\033[0m"
-else
-	echo -e "\t\033[31mWP user creation has failed\033[0m"
-fi
+	echo -e "\t\033[33mWP user create...\033[0m"
+	wp user create --allow-root --role=author $USER1_LOGIN $USER1_MAIL --user_pass=$USER1_PASS --path='/var/www/wordpress' >> /log.txt
+	if [ $? == 0 ] ; then
+		echo -e "\t\033[32mWP user successfully created\033[0m"
+	else
+		echo -e "\t\033[31mWP user creation has failed\033[0m"
+	fi
 
 	sleep 5
 
@@ -59,9 +59,8 @@ fi
 		echo -e "\033[31mERROR while update plugin\033[0m"
 	fi
 
-
 	echo -e "\t\033[33mInstaling theme\033[0m"
-	wp theme install twentysixteen --activate --path='/var/www/wordpress'
+	wp theme install oceanwp --activate --path='/var/www/wordpress'
 	if [ $? == 0 ] ; then
 		echo -e "\033[32mTheme has been installed\033[0m"
 	else
@@ -71,10 +70,6 @@ fi
 else
 	echo -e "\033[32mWordpress has already been installed\033[0m"
 fi
+
 echo -e "\t\033[33mRestarting php...\033[0m"
 /usr/sbin/php-fpm8 -F
-if [ $? == 0 ] ; then
-	echo -e "\033[32mPhp successfully restarted\033[0m"
-else
-	echo -e "\033[31mERROR while restarting php\033[0m"
-fi

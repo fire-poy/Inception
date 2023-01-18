@@ -3,7 +3,6 @@ FROM alpine:3.16.3
 # Installation of mariadb and mysql client
 RUN	apk update && apk upgrade && \
 	apk add mariadb mysql-client gettext
-	# chmod 755 /var/lib/mysql TO CHECK
 
 # Delete default mariadb's configuration file
 RUN	rm -f /etc/my.cnf.d/mariadb-server.cnf
@@ -18,11 +17,6 @@ COPY	conf/comands.sql /comands.sql
 COPY	conf/start_config.sh /start_config.sh
 
 RUN		chown -R mysql:mysql /var/lib/mysql
-
-# ???
-# RUN chmod 755 /var/www/html
-# ???
-# RUN chown -R www-data:www-data /var/www/html
 
 EXPOSE 3306
 

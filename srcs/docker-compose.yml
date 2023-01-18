@@ -5,14 +5,12 @@ networks:
  spidy_web:
   driver: bridge
 
-# how to name volumes
-
 volumes:
 
  wordpress:
   driver: local
   driver_opts:
-   type: 'volume' # ???
+   type: 'volume'
    o: 'bind'
    device: '/home/epresa/data/wordpress'
 

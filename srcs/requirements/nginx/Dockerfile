@@ -21,11 +21,5 @@ RUN mkdir -p /var/run/nginx
 # copy the configuration file from the repository to the container
 COPY conf/nginx.conf /etc/nginx/nginx.conf
 
-# RUN mkdir /var/www/wordpress
-
-# RUN chmod 755 /var/www/wordpress
-
-# RUN chown -R www-data:www-data /var/www/wordpress
-
 # Launch NGINX service in the foreground so that the container does not stop
 CMD [ "nginx", "-g", "daemon off;" ]
