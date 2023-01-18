@@ -1,6 +1,7 @@
 #!/bin/sh
 if [ ! -d /var/lib/mysql/mysql ]; then
 {
+	echo -e "\t\033[33m/var/lib/mysql/mysql not founded\033[0m"
 	echo -e "\n\033[33mStart instalation mariadb\n\033[0m"
 	mysql_install_db --datadir=/var/lib/mysql
 	if [ $? == 0 ]; then
@@ -20,15 +21,15 @@ if [ ! -d /var/lib/mysql/mysql ]; then
 	sleep 5
 
 	if [ -d /run/mysqld ] ; then
-		echo -e "\n\033[33mThe directory /run/mysqld already exists\n\033[0m";
+		echo -e "\n\033[33mThe directory /run/mysqld already exists\033[0m";
 	else
 	{
 		echo -e "\n\033[33mCreating directory /run/mysqld\n\033[0m";
 		mkdir /run/mysqld
 		if [ $? == 0 ]; then
-			echo -e "\t\033[32mDirectory /run/mysqldMaria successfully created\033[0m"
+			echo -e "\t\033[32mDirectory /run/mysqld successfully created\033[0m"
 		else
-			echo -e "\t\033[31mERROR: Directory /run/mysqldMaria couldn't be created\033[0m"
+			echo -e "\t\033[31mERROR: Directory /run/mysqld couldn't be created\033[0m"
 			exit 1
 		fi
 	}
@@ -54,7 +55,5 @@ if [ ! -d /var/lib/mysql/mysql ]; then
 }
 else
 	echo -e "\033[32mThe database was already created\033[30m"
+	/usr/bin/mysqld_safe --datadir=/var/lib/mysql
 fi
-# check if its possible to restart in a not safe mode
-echo -e "\t\n\033[33mRestarting mysql\n\033[0m"
-usr/bin/mysqld_safe --datadir=/var/lib/mysql

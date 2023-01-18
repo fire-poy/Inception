@@ -6,17 +6,15 @@ RUN apk update && \
 	apk upgrade && \
 	apk add nginx
 
-# creation of directory to store the certificate and ssl key
-RUN mkdir -p /etc/nginx/ssl
-
-# Download tool for the creation of the SSL certificate
-RUN apk add openssl
-
-# SSL certificate and key creation
-RUN openssl req -x509 -nodes -out /etc/nginx/ssl/inception.crt -keyout /etc/nginx/ssl/inception.key -subj "/C=FR/ST=IDF/L=Paris/O=42/OU=42/CN=epresa-c.42.fr/UID=epresa-c"
-
-# Creating a folder to store nginx configuration files
-RUN mkdir -p /var/run/nginx
+# LINE 13: creation of directory to store the certificate and ssl key
+# LINE 14: Download tool for the creation of the SSL certificate
+# LINE 15: SSL certificate and key creation
+# LINE 17: Creating a folder to store nginx configuration files
+RUN mkdir -p /etc/nginx/ssl && \
+	apk add openssl && \
+	openssl req -x509 -nodes -out /etc/nginx/ssl/inception.crt -keyout /etc/nginx/ssl/inception.key \
+	-subj "/C=FR/ST=IDF/L=Paris/O=42/OU=42/CN=epresa-c.42.fr/UID=epresa-c" && \
+	mkdir -p /var/run/nginx
 
 # copy the configuration file from the repository to the container
 COPY conf/nginx.conf /etc/nginx/nginx.conf
