@@ -4,7 +4,7 @@ FROM alpine:3.16.3
 # installation of nginx
 RUN apk update && \
 	apk upgrade && \
-	apk add nginx
+	apk add nginx=1.22.1-r0
 
 # LINE 13: creation of directory to store the certificate and ssl key
 # LINE 14: Download tool for the creation of the SSL certificate

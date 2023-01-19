@@ -2,7 +2,6 @@ FROM	alpine:3.16.3
 
 RUN		apk update && apk upgrade && \
 		apk add php8 php8-fpm php8-opcache php8-gd php8-curl php8-mysqli php8-json mariadb-client php-phar php8-mbstring
-		# may be need more dependences of php8
 
 RUN		mkdir /var/www && \
 		wget https://fr.wordpress.org/wordpress-6.0-fr_FR.tar.gz -P /var/www && \

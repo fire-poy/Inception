@@ -3,7 +3,7 @@ FROM alpine:3.16.3
 # LINE 5 - 6: Installation of mariadb and mysql client
 # LINE 7: Delete default mariadb's configuration file
 RUN	apk update && apk upgrade && \
-	apk add mariadb mysql-client gettext && \
+	apk add mariadb=10.6.10-r0 mysql-client=10.6.10-r0 gettext=0.21-r2 && \
 	rm -f /etc/my.cnf.d/mariadb-server.cnf
 
 # Copy my mariadb's configuration file into the container
