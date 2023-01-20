@@ -1,4 +1,5 @@
 #!/bin/sh
+#sino existe el directorio entonces
 if [ ! -d /var/lib/mysql/mysql ]; then
 {
 	# sleep infinit
