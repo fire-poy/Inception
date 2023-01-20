@@ -18,7 +18,7 @@ volumes:
   driver: local
   driver_opts:
    type: 'volume'
-   o: 'bind' # Bind Mounts are volumes that mount on a path to the host, and they can be modified by other processes outside docker.
+   o: 'bind'
    device: '/home/epresa/data/mariadb'
 
 services:
