@@ -1,6 +1,6 @@
 #!/bin/sh
 #sino existe el directorio entonces
-if [ ! -d /var/lib/mysql/mysql ]; then
+if [ ! -d /var/lib/mysql/mysql/ ]; then
 {
 	# sleep infinit
 	echo -e "\n\033[33mStart instalation mariadb\n\033[0m"
