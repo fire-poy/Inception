@@ -2,6 +2,7 @@
 sleep 10
 if [ ! -f /var/www/wordpress/wp-config.php ] ; then
 {
+	
 	echo -e "\t\033[33mWP config create...\033[0m"
 	wp config create	--allow-root \
 						--dbname=$MYSQL_NAME \

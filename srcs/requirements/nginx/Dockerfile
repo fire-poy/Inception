@@ -13,11 +13,19 @@ RUN apk update && \
 RUN mkdir -p /etc/nginx/ssl && \
 	apk add openssl && \
 	openssl req -x509 -nodes -out /etc/nginx/ssl/inception.crt -keyout /etc/nginx/ssl/inception.key \
-	-subj "/C=FR/ST=IDF/L=Paris/O=42/OU=42/CN=epresa-c.42.fr/UID=epresa-c" && \
+	-subj "/C=CH/ST=VD/L=Lausanne/O=42/OU=42/CN=mpons.42.fr/UID=mpons" && \
 	mkdir -p /var/run/nginx
+	# -subj "/C=FR/ST=IDF/L=Paris/O=42/OU=42/CN=mpons.42.fr/UID=mpons" && \
+
+
+RUN	mkdir -p /etc/nginx/wordpress
 
 # copy the configuration file from the repository to the container
 COPY conf/nginx.conf /etc/nginx/nginx.conf
+
+# RUN apk add --no-cache tini
+# # Tini is now available at /sbin/tini
+# ENTRYPOINT ["/sbin/tini", "--"]
 
 # Launch NGINX service in the foreground so that the container does not stop
 CMD [ "nginx", "-g", "daemon off;" ]
