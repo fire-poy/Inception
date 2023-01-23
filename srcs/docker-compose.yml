@@ -35,6 +35,7 @@ services:
   env_file: .env
   volumes:
   - mariadb:/var/lib/mysql
+  #el dossier /home/mpons/data/mariadb va a estar compartido en /var/lib/mysql del container
   restart: unless-stopped
 
  nginx:
