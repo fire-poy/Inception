@@ -2,12 +2,12 @@ version: "3"
 
 networks:
 
- spidy_web:
+ spider:
   driver: bridge
 
 volumes:
 
- wordpress:
+ wp-vol:
   driver: local
   driver_opts:
    type: 'volume'
@@ -15,7 +15,7 @@ volumes:
    device: '/home/mpons/data/wordpress' 
    #path pour garder le volume dans la VM
 
- mariadb:
+ mariadb-vol:
   driver: local
   driver_opts:
    type: 'volume'
@@ -28,24 +28,22 @@ services:
  mariadb:
   container_name: mariadb
   image: mariadb
-  # init: true
   networks:
-  - spidy_web
+  - spider
   build: ./requirements/mariadb
   env_file: .env
   volumes:
-  - mariadb:/var/lib/mysql
+  - mariadb-vol:/var/lib/mysql
   #el dossier /home/mpons/data/mariadb va a estar compartido en /var/lib/mysql del container
   restart: unless-stopped
 
  nginx:
   container_name: nginx
   image: nginx
-  # init: true
   volumes:
-  - wordpress:/var/www/wordpress
+  - wp-vol:/var/www/wordpress
   networks:
-  - spidy_web
+  - spider
   depends_on:
   - wordpress
   build: ./requirements/nginx
@@ -57,12 +55,11 @@ services:
  wordpress:
   container_name: wordpress
   image: wordpress
-  # init: true
   env_file: .env
   volumes:
-  - wordpress:/var/www/wordpress
+  - wp-vol:/var/www/wordpress
   networks:
-  - spidy_web
+  - spider
   build: ./requirements/wordpress
   depends_on:
   - mariadb

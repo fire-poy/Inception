@@ -17,4 +17,8 @@ COPY	conf/www.conf /etc/php8/php-fpm.d
 RUN		wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
 		chmod +x wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp
 
-ENTRYPOINT	["sh", "entrypoint.sh"]
+RUN apk add --no-cache tini
+# Tini is now available at /sbin/tini
+ENTRYPOINT ["/sbin/tini", "--"]
+
+CMD	["sh", "entrypoint.sh"]

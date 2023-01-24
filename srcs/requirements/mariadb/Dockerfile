@@ -19,4 +19,8 @@ RUN		chown -R mysql:mysql /var/lib/mysql
 
 EXPOSE 3306
 
-ENTRYPOINT	["sh", "start_config.sh"]
+RUN apk add --no-cache tini
+# Tini is now available at /sbin/tini
+ENTRYPOINT ["/sbin/tini", "--"]
+
+CMD	["sh", "start_config.sh"]
