@@ -8,7 +8,10 @@ if [ ! -f /var/www/wordpress/wp-config.php ] ; then
 						--dbname=$MYSQL_NAME \
 						--dbuser=$MYSQL_USER \
 						--dbpass=$MYSQL_PASSWORD \
-						--dbhost=$MYSQL_HOST --path='/var/www/wordpress' >> log.txt
+						--dbhost=$MYSQL_HOST \
+						--path='/var/www/wordpress' >> log.txt
+						## va cambiar resolver mariadb:3306 por su ip y va a buscar la base de datos
+						#--path donde guarda los archivos wordpress
 	if [ $? == 0 ] ; then
 		echo -e "\t\033[32mWP config successfully created\033[0m"
 	else
@@ -37,6 +40,22 @@ if [ ! -f /var/www/wordpress/wp-config.php ] ; then
 	else
 		echo -e "\t\033[31mWP user creation has failed\033[0m"
 	fi
+	
+	echo -e "\t\033[33mPlugin update\033[0m"
+	wp plugin update --all --path='/var/www/wordpress' >> log.txt
+	if [ $? == 0 ] ; then
+		echo -e "\033[32mPlugin has been updated\033[0m"
+	else
+		echo -e "\033[31mERROR while update plugin\033[0m"
+	fi
+
+	echo -e "\t\033[33mInstaling theme\033[0m"
+	wp theme install oceanwp --activate --path='/var/www/wordpress' >> log.txt
+	if [ $? == 0 ] ; then
+		echo -e "\033[32mTheme has been installed\033[0m"
+	else
+		echo -e "\033[31mERROR while instaling theme\033[0m"
+	fi
 
 	echo -e "\t\033[33mChecking if /run/php folder existe\033[0m"
 	if [ ! -d /run/php ] ; then
@@ -53,25 +72,10 @@ if [ ! -f /var/www/wordpress/wp-config.php ] ; then
 		echo -e "\t\033[32mThe /run/php folder already exists\033[0m"
 	fi
 
-	echo -e "\t\033[33mPlugin update\033[0m"
-	wp plugin update --all --path='/var/www/wordpress' >> log.txt
-	if [ $? == 0 ] ; then
-		echo -e "\033[32mPlugin has been updated\033[0m"
-	else
-		echo -e "\033[31mERROR while update plugin\033[0m"
-	fi
-
-	echo -e "\t\033[33mInstaling theme\033[0m"
-	wp theme install oceanwp --activate --path='/var/www/wordpress' >> log.txt
-	if [ $? == 0 ] ; then
-		echo -e "\033[32mTheme has been installed\033[0m"
-	else
-		echo -e "\033[31mERROR while instaling theme\033[0m"
-	fi
 }
 else
 	echo -e "\033[32mWordpress has already been installed\033[0m"
 fi
 
-echo -e "\t\033[33mRestarting php...\033[0m"
+echo -e "\t\033[33mStarting php...\033[0m"
 /usr/sbin/php-fpm8 -F

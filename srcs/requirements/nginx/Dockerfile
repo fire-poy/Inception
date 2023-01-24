@@ -15,7 +15,6 @@ RUN mkdir -p /etc/nginx/ssl && \
 	openssl req -x509 -nodes -out /etc/nginx/ssl/inception.crt -keyout /etc/nginx/ssl/inception.key \
 	-subj "/C=CH/ST=VD/L=Lausanne/O=42/OU=42/CN=mpons.42.fr/UID=mpons" && \
 	mkdir -p /var/run/nginx
-	# -subj "/C=FR/ST=IDF/L=Paris/O=42/OU=42/CN=mpons.42.fr/UID=mpons" && \
 
 
 RUN	mkdir -p /etc/nginx/wordpress
