@@ -1,0 +1,71 @@
+version: "3"
+
+networks:
+
+ spidy_web:
+  driver: bridge
+
+volumes:
+
+ wordpress:
+  driver: local
+  driver_opts:
+   type: 'volume'
+   o: 'bind'
+   device: '/home/mpons/data/wordpress' 
+   #path pour garder le volume dans la VM
+
+ mariadb:
+  driver: local
+  driver_opts:
+   type: 'volume'
+   o: 'bind'
+   device: '/home/mpons/data/mariadb'
+# Bind Mounts are volumes that mount on a path to the host, and they can be modified by other processes outside docker.
+
+services:
+
+ mariadb:
+  container_name: mariadb
+  image: mariadb
+  # init: true
+  networks:
+  - spidy_web
+  build: ./requirements/mariadb
+  env_file: .env
+  volumes:
+  - mariadb:/var/lib/mysql
+  #el dossier /home/mpons/data/mariadb va a estar compartido en /var/lib/mysql del container
+  restart: unless-stopped
+
+ nginx:
+  container_name: nginx
+  image: nginx
+  # init: true
+  volumes:
+  - wordpress:/var/www/wordpress
+  networks:
+  - spidy_web
+  depends_on:
+  - wordpress
+  build: ./requirements/nginx
+  env_file: .env
+  ports:
+  - "443:443"
+  restart: on-failure
+
+ wordpress:
+  container_name: wordpress
+  image: wordpress
+  # init: true
+  env_file: .env
+  volumes:
+  - wordpress:/var/www/wordpress
+  networks:
+  - spidy_web
+  build: ./requirements/wordpress
+  depends_on:
+  - mariadb
+  restart: on-failure
+  expose:
+  - "9000"
