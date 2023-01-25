@@ -3,6 +3,7 @@ if [ ! -d /var/lib/mysql/mysql ]; then
 {
 	echo -e "\t\033[33m/var/lib/mysql/mysql not founded\033[0m"
 	echo -e "\n\033[33mStart instalation mariadb\n\033[0m"
+	# install les tables de base de données nécessaires pour un nouveau serveur MySQL
 	mysql_install_db --datadir=/var/lib/mysql
 	if [ $? == 0 ]; then
 		echo -e "\t\033[32mMaria db correctly installed\033[0m"
@@ -10,7 +11,7 @@ if [ ! -d /var/lib/mysql/mysql ]; then
 		echo -e "\t\033[31mERROR: Maria db couldn't be installed\033[0m"
 		exit 1
 	fi
-
+	# démarrer le serveur MySQL de manière sécurisée
 	mysqld_safe &
 	if [ $? == 0 ]; then
 		echo -e "\t\033[32mmysqld_safe correctly started\033[0m"
