@@ -10,7 +10,7 @@ RUN	apk update && apk upgrade && \
 COPY	conf/my.cnf /etc/my.cnf.d/
 
 # Copy the sql script to initialise the users and passwords into the container
-COPY	conf/comands.sql /comands.sql
+COPY	conf/cmd.sql /cmd.sql
 
 # Copy the shell script to start the database into the container
 COPY	conf/start_config.sh /start_config.sh

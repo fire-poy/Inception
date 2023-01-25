@@ -45,8 +45,8 @@ if [ ! -d /var/lib/mysql/mysql ]; then
 		exit 1
 	fi
 
-	echo -e "\t\n\033[33mExecuting comands.sql script to create mysqld users and passwords\n\033[0m"
-	envsubst < comands.sql | mysql -h localhost -u root
+	echo -e "\t\n\033[33mExecuting cmd.sql script to create mysqld users and passwords\n\033[0m"
+	envsubst < cmd.sql | mysql -h localhost -u root
 	if [ $? == 0 ]; then
 		echo -e "\033[32mUsers and passwords successfully created\033[0m"
 	else
