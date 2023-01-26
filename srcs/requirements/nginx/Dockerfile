@@ -13,8 +13,7 @@ RUN apk update && \
 RUN mkdir -p /etc/nginx/ssl && \
 	apk add openssl=1.1.1s-r0 && \
 	openssl req -x509 -nodes -out /etc/nginx/ssl/inception.crt -keyout /etc/nginx/ssl/inception.key \
-	-subj "/C=CH/ST=VD/L=Lausanne/O=42/OU=42/CN=mpons.42.fr/UID=mpons" && \
-	mkdir -p /var/run/nginx
+	-subj "/C=CH/ST=VD/L=Lausanne/O=42/OU=42/CN=mpons.42.fr/UID=mpons"
 
 RUN	mkdir -p /etc/nginx/wordpress
 
