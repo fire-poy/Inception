@@ -72,5 +72,5 @@ else
 	echo -e "\033[32mWordpress has already been installed\033[0m"
 fi
 
-echo -e "\t\033[33mRestarting php...\033[0m"
+echo -e "\t\033[33mStarting php...\033[0m"
 /usr/sbin/php-fpm8 -F
